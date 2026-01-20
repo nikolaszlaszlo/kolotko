@@ -3,36 +3,1363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolodko - Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Kolodko</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-navy: #000814;
+            --navy: #001D3D;
+            --blue: #003566;
+            --yellow: #FFC300;
+            --bright-yellow: #FFD60A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(180deg, #000814 0%, #001D3D 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 214, 10, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 195, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 53, 102, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .navbar {
+            background: rgba(0, 29, 61, 0.3) !important;
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 214, 10, 0.1);
+            padding: 1.2rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 8, 20, 0.7) !important;
+            backdrop-filter: blur(40px) saturate(180%);
+            padding: 0.8rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            color: var(--bright-yellow) !important;
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 20px rgba(255, 214, 10, 0.3);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.3rem;
+            padding: 0.6rem 1.2rem !important;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--yellow), var(--bright-yellow));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-link:hover::before {
+            opacity: 1;
+        }
+
+        .nav-link:hover {
+            color: var(--bright-yellow) !important;
+            background: rgba(255, 214, 10, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .landing-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .landing-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(255, 214, 10, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(0, 53, 102, 0.3) 0%, transparent 50%);
+            animation: landingPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes landingPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .landing-title {
+            font-size: clamp(3rem, 10vw, 6.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, var(--bright-yellow) 50%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -3px;
+            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 60px rgba(255, 214, 10, 0.3);
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .landing-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .section {
+            padding: 120px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, var(--bright-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 80px;
+            text-align: center;
+            letter-spacing: -2px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--bright-yellow), transparent);
+            border-radius: 4px;
+            box-shadow: 0 0 20px var(--yellow);
+        }
+
+        .kolodkomih-section {
+            background: transparent;
+        }
+
+        .kolodkomih-card {
+            background: rgba(0, 29, 61, 0.25);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 40px;
+            padding: 70px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .kolodkomih-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .kolodkomih-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(255, 214, 10, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 214, 10, 0.3);
+        }
+
+        .kolodkomih-image {
+            width: 100%;
+            max-width: 350px;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 214, 10, 0.3);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(255, 214, 10, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .kolodkomih-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 0 60px rgba(255, 214, 10, 0.3);
+            border-color: var(--bright-yellow);
+        }
+
+        .kolodkomih-name {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--bright-yellow), var(--yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        .kolodkomih-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .szobors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .szobor-item {
+            background: rgba(0, 29, 61, 0.2);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            cursor: pointer;
+        }
+
+        .szobor-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .szobor-item:nth-child(even) {
+            transition-delay: 0.1s;
+        }
+
+        .szobor-item:nth-child(3n) {
+            transition-delay: 0.2s;
+        }
+
+        .szobor-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(255, 214, 10, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 214, 10, 0.4);
+        }
+
+        .szobor-image-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .szobor-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .szobor-item:hover .szobor-image {
+            transform: scale(1.12);
+        }
+
+        .szobor-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg, 
+                transparent 0%, 
+                rgba(0, 8, 20, 0.4) 70%,
+                rgba(0, 8, 20, 0.8) 100%
+            );
+            pointer-events: none;
+        }
+
+        .szobor-item:hover .szobor-item {
+            transform: scale(1.2) rotate(360deg);
+            background: rgba(255, 214, 10, 0.4);
+        }
+
+        .szobor-content {
+            padding: 35px;
+            position: relative;
+        }
+
+        .szobor-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--bright-yellow);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .szobor-text {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 1rem;
+            line-height: 1.8;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 214, 10, 0.15);
+            border: 1px solid rgba(255, 214, 10, 0.3);
+            border-radius: 25px;
+            color: var(--bright-yellow);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .read-more-btn:hover {
+            background: rgba(255, 214, 10, 0.25);
+            transform: translateX(5px);
+            color: var(--bright-yellow);
+        }
+
+        .szobor-expanded {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 8, 20, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .szobor-expanded.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .expanded-content {
+            max-width: 1200px;
+            background: rgba(0, 29, 61, 0.4);
+            backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 40px;
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .expanded-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            text-align: left;
+        }
+        
+        .expanded-title {
+            color: var(--bright-yellow);
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            font-weight: 800;
+            text-align: left;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 214, 10, 0.2);
+            border: 1px solid rgba(255, 214, 10, 0.3);
+            border-radius: 50%;
+            color: var(--bright-yellow);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 214, 10, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .utvonal-section {
+            background: transparent;
+            position: relative;
+        }
+
+        .utvonal-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 10px;
+        }
+
+        .utvonal-path {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .utvonal-path::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(180deg, 
+                transparent 0%,
+                var(--bright-yellow) 10%,
+                var(--yellow) 50%,
+                var(--bright-yellow) 90%,
+                transparent 100%);
+            transform: translateX(-50%);
+            border-radius: 3px;
+            box-shadow: 
+                0 0 30px rgba(255, 214, 10, 0.6),
+                0 0 60px rgba(255, 195, 0, 0.3);
+            animation: lineGlow 3s ease-in-out infinite;
+        }
+
+        .utvonal-path::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--bright-yellow);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 
+                0 0 20px rgba(255, 214, 10, 0.8),
+                0 0 40px rgba(255, 214, 10, 0.5),
+                0 0 60px rgba(255, 195, 0, 0.3);
+            animation: topPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 
+                    0 0 30px rgba(255, 214, 10, 0.6),
+                    0 0 60px rgba(255, 195, 0, 0.3);
+            }
+            50% {
+                opacity: 0.8;
+                box-shadow: 
+                    0 0 40px rgba(255, 214, 10, 0.9),
+                    0 0 80px rgba(255, 195, 0, 0.5),
+                    0 0 120px rgba(255, 214, 10, 0.2);
+            }
+        }
+
+        @keyframes topPulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(-50%) scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes flowDown {
+            0% {
+                transform: translateX(-50%) translateY(-20px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) translateY(calc(100% + 20px));
+                opacity: 0;
+            }
+        }
+
+        .utvonal-path {
+            position: relative;
+        }
+
+        .utvonal-path .flowing-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            transform: translateX(-50%);
+            color: var(--bright-yellow);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: flowDown 8s linear infinite;
+            z-index: 2;
+            filter: drop-shadow(0 0 10px rgba(255, 214, 10, 1));
+        }
+
+        .utvonal {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+            z-index: 3;
+        }
+
+        .utvonal-image::after {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bright-yellow);
+            font-size: 24px;
+            text-shadow: 
+                0 0 25px rgba(255, 214, 10, 0.8),
+                0 0 50px rgba(255, 214, 10, 0.4);
+            z-index: 10;
+            animation: stopPulse 2s ease-in-out infinite;
+            pointer-events: none;
+            background: var(--dark-navy);
+            border-radius: 50%;
+        }
+
+        .utvonal:nth-child(even) .utvonal-image::after {
+            left: -35px;
+            right: auto;
+        }
+
+        .utvonal-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .utvonal-image {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes stopPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        .utvonal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .utvonal:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .utvonal-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid rgba(255, 214, 10, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        .utvonal:hover .utvonal-image {
+            transform: scale(1.05);
+            border-color: var(--bright-yellow);
+            box-shadow: 0 15px 50px rgba(255, 214, 10, 0.3);
+        }
+
+        .utvonal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .utvonal:hover .utvonal-image img {
+            transform: scale(1.08);
+        }
+
+        .utvonal-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 214, 10, 0.25);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--bright-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--bright-yellow);
+            z-index: 2;
+            box-shadow: 0 4px 20px rgba(255, 214, 10, 0.4);
+        }
+
+        .utvonal-content {
+            flex: 1;
+            background: rgba(0, 29, 61, 0.3);
+            backdrop-filter: blur(30px) saturate(180%);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s;
+        }
+
+        .utvonal:hover .utvonal-content {
+            background: rgba(0, 29, 61, 0.4);
+            border-color: rgba(255, 214, 10, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .utvonal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--bright-yellow), var(--yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .utvonal-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            line-height: 1.0;
+        }
+
+        .utvonal-connector {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 310px;
+            height: 30px;
+            background: var(--bright-yellow);
+            border: 4px solid var(--dark-navy);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 214, 10, 0.6);
+            z-index: 3;
+        }
+
+
+        @media (max-width: 768px) {
+            .expanded-content {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .expanded-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .utvonal-path::before {
+                left: 40px;
+            }
+
+            .utvonal {
+                flex-direction: row !important;
+                padding-left: 60px;
+            }
+
+            .utvonal-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .utvonal-connector {
+                left: 40px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .navbar-nav {
+                text-align: center;
+                gap: 10px;
+                padding-top: 15px;
+            }
+
+            .nav-link {
+                padding: 12px 16px !important;
+                font-size: 1.1rem;
+            }
+        }
+
+
+        .footer {
+            background: rgba(0, 8, 20, 0.5);
+            backdrop-filter: blur(20px);
+            padding: 50px 0;
+            border-top: 1px solid rgba(255, 214, 10, 0.1);
+            text-align: center;
+        }
+
+        .footer p {
+            color: rgba(207, 207, 207, 0.8);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .szobor-content {
+                padding: 20px;
+            }
+
+            .szobor-image-container {
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .landing-section {
+                min-height: 80vh;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .kolodkomih-card,
+            .expanded-content {
+                padding: 25px;
+                text-align: center;
+            }
+
+            .kolodkomih-image {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .szobors-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .szobor-image-container {
+                height: 280px;
+            }
+
+            .utvonal {
+                gap: 20px;
+            }
+
+            .utvonal-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .utvonal-content {
+                padding: 20px;
+            }
+
+            .utvonal-title {
+                font-size: 1.5rem;
+            }
+
+            .utvonal-text {
+                font-size: 1rem;
+            }
+
+            .map-responsive {
+                position: relative;
+                width: 100%;
+                padding-bottom: 56.25%;
+                height: 0;
+                overflow: hidden;
+                border-radius: 20px;
+            }
+
+            .map-responsive iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
             <a class="navbar-brand" href="#">Kolodko</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                        <a class="nav-link" href="#kolodkomihaly">Szobrász</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="kolodkomihalypage.html">Bemutató</a>
+                        <a class="nav-link" href="#szobrok">Szobrok</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="statuespage.html">Szobrok</a>
+                        <a class="nav-link" href="#nevezetesseg">Nevezetességek</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="turistpage.html">Turista</a>
+                        <a class="nav-link" href="#utvonal">Útvonal</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <section class="landing-section">
+        <div class="container">
+            <div class="landing-content fade-in-up">
+                <h1 class="landing-title">Kolodko</h1>
+                <p class="landing-subtitle">Fedezze fel egy kiemelkedő szobrász munkásságát és alkotásait</p>
+            </div>
+        </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <section id="kolodkomihaly" class="section kolodkomih-section">
+        <div class="container">
+            <h2 class="section-title">Kolodko Mihály</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-11">
+                    <div class="kolodkomih-card">
+                        <div class="row align-items-center g-5">
+                            <div class="col-md-5 text-center">
+                                <img src="img/kolodkomihaly.jpg" class="kolodkomih-image">
+                            </div>
+                            <div class="col-md-7">
+                                <h3 class="kolodkomih-name">Kolodko Mihály</h3>
+                                <p class="kolodkomih-text">
+                                    Kolodko Mihály 1978 Ungvár kárpátalján született.Magyar szobrászművész, aki az elmúlt évtizedben különleges, gyakran meglepetésszerűen felbukkanó miniatűr köztéri szobraival vált ismertté Magyarországon és nemzetközileg is. Munkássága a kortárs városi művészet egyik sajátos irányát képviseli.
+                                </p>
+                                <p class="kolodkomih-text">
+                                    Kolodko Ungváron nőtt fel művészeti tanulmányait Ukrajnában végezte ahol elsajátította a hagyományos szobrászati technikákat. Pályája elején klasszikus köztéri munkákon is dolgozott, ám hamar érdeklődni kezdett a kisebb , intimebb alkotások iránt. Ez a fordulat részben abból a felismerésből fakadt, hogy a városi térben elhelyezett apró szobrok sokkal közvetlenebb kapcsolatot tudnak kialakítani a járókelőkkel, mint a hagyományos emlékművek. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="szobrok" class="section szobrok-section">
+        <div class="container">
+            <h2 class="section-title">A Szobrok</h2>
+            
+            <div class="szobors-grid">
+                <div class="szobor-item" data-szobor="1">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/mrbean.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Mr Bean</h3>
+                        <p class="szobor-text">
+                            Kolodko Mihály, a magyar származású szobrászművész, köztéri miniszobrairól vált híressé, amelyek Budapesten találhatók. Egyik különleges alkotása Mr. Bean mini szobra, amely a népszerű brit komikus sorozatának egyik “szereplőjét” formálja meg. A művész sajátos humorral és részletgazdag kidolgozással örökítette meg Rowan Atkinson ikonikus figurájának plüssállatát. 
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="2">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/lufikutya.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Lufikutya</h3>
+                        <p class="szobor-text">
+                            Libidó, avagy Lufikutya csonttal” minikompozíció a Duna-korzón, hát, elég érdekes látvány.  Asszociálhatnánk kutyacsontra, és kutyavégtermékre (kutyakakira) is - Kolodko hagyja, hogy mindenkinek a fantáziája alapján szülessen egy ötlet a műveit látva  viszont ez esetben Kolodko Mihály számára egy igen fontos jelentőséggel bíró alkotás ez: a Lufikutya Jeff Koons kortárs amerikai szobrászra utal, akinek van egy hasonló nevű alkotása, és aki jelenleg a világ egyik legdrágább sztárművésze.  A titok a csontban van, mely ösztönösen vonzza a kutyát, akár egy férfit a nő, ezért is lett „Libidó” a címe.  Helyszín: Lánchíd pesti oldala, az InterContinental Hotel Dunakorzó felöli oldalán. 
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="3">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/breka.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Breki</h3>
+                        <p class="szobor-text">
+                            Aki nyitott szemmel jár a budapesti Szabadság tér parkjában, az a Hütte kávézóval szemben érdekes bronzalakra lehet figyelmes. Breki miniszobra első látásra csak egy egyszerű békafigurának tűnik, ám közelebbről megnézve egyértelművé válik, hogy az 1971 és 1986 között futó Muppet Show sztárjának állít emléket
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="4">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/holdjaro.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Holdjáró</h3>
+                        <p class="szobor-text">
+                            Kolodko Mihály Holdjáró miniszobra az egyik legérdekesebb és leginkább fantáziadús alkotása, amely ismét a művész kreativitását és játékosságát dicséri. A szobor Budapest egyik eldugott pontján, a városi tér részeként bújik meg, és a művész munkáira jellemző módon apró méretével mégis figyelemfelkeltő hatást gyakorol a szemlélőre. 
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="5">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/usanka.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Usánka</h3>
+                        <p class="szobor-text">
+                            Egy miniszobrot egy politikus egyszer már a Dunába dobott, erre reflektálhat a művész a magától a vízből visszatérő, békalábú usánka szobrával. Ahogy egy kommentelő megírta, a kis szobrot pontosan az Országház Látogatóközpont mögött találjuk, attól pár méterre, a Duna melletti lépcsőn. „A látogatóközpont mögött van egy zebra, azon átmenve jobbra tarts a Margit híd felé, 1 percen belül meglesz” – olvasható a Facebook-oldalon. 
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="6">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/fokukac.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Főkukac</h3>
+                        <p class="szobor-text">
+                            Kolodko Mihály egyik ironikus és sokértelmű miniszobra, amely finom humorral reflektál a hatalom és a társadalmi hierarchia kérdésére. A kis bronzfigura egy kukacot ábrázol, amely emberi vonásokkal és határozott tartással jelenik meg, mintha egy „főnök” szerepét öltené magára. Már maga az elnevezés is beszédes: a „főkukac” egyszerre nevetséges és elgondolkodtató.
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="7">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/rubikkocka.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Rubik kocka</h3>
+                        <p class="szobor-text">
+                            Kolodko Mihály egyik ötletes és szimbolikus miniszobra, amely egy világhírű magyar találmány előtt tiszteleg. A kis bronzalkotás nemcsak Rubik Ernő zsenialitását idézi meg, hanem a magyar kreativitás és problémamegoldó gondolkodás jelképe is. A kocka egyszerű formája mögött végtelen variációk és kihívások rejlenek, akárcsak a modern világban felmerülő kérdések mögött. 
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="szobor-item" data-szobor="8">
+                    <div class="szobor-image-container">
+                        <img src="img/szoborkoz/skalakope.jpg" class="szobor-image">
+                    </div>
+                    <div class="szobor-content">
+                        <h3 class="szobor-title">Skála Kópé</h3>
+                        <p class="szobor-text">
+                            Kolodko Mihály egyik legismertebb és legkedveltebb miniszobra, amely játékos formában idézi meg a múlt egy darabját. A kis bronzfigura a szocializmus idején működő Skála áruházlánc reklámfiguráját eleveníti fel, aki egykor a fogyasztói kultúra derűs, kissé naiv arcát képviselte. 
+                        </p>
+                        <button class="read-more-btn">Bővebben <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="szobor-expanded" id="expandedModal">
+        <div class="expanded-content">
+            <div class="close-btn" onclick="closeExpanded()"><i class="fas fa-times"></i></div>
+            <div id="expandedContent"></div>
+        </div>
+    </div>
+
+    <section id="utvonal" class="section utvonal-section">
+        <div class="container">
+            <h2 class="section-title">Az Útvonal</h2>
+            <div class="utvonal-container">
+                <div class="utvonal-path">
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">1</div>
+                            <img src="img/szoborkoz/mrbean.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Mr Bean</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <img src="img/nevezettetwqwqetfw1.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Nevezetesség</h3>
+                            <p class="utvonal-text">A Német megszállás áldozatának emlékmüve</p>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">3</div>
+                            <img src="img/szoborkoz/breka.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Breki</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">2</div>
+                            <img src="img/szoborkoz/lufikutya.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Lufikutya</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">4</div>
+                            <img src="img/szoborkoz/holdjaro.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Holdjáró</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">5</div>
+                            <img src="img/szoborkoz/usanka.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Usánka</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <img src="img/penzmoso.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Nevezetesség</h3>
+                            <p class="utvonal-text">A Parlament</p>
+                        </div>
+                    </div>
+
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">6</div>
+                            <img src="img/szoborkoz/fokukac.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Főkukac</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">7</div>
+                            <img src="img/szoborkoz/rubikkocka.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Rubik Kocka</h3>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <img src="img/nyugati.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Nevezetesség</h3>
+                            <p class="utvonal-text">A Nyugati Pályaudvar</p>
+                        </div>
+                    </div>
+
+                    <div class="utvonal">
+                        <div class="utvonal-image">
+                            <div class="utvonal-number">8</div>
+                            <img src="img/szoborkoz/skalakope.jpg">
+                        </div>
+                        <div class="utvonal-content">
+                            <h3 class="utvonal-title">Skála Kópé</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container map-responsive">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d13350.032152649232!2d19.05076065419927!3d47.50404261511723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e2!4m5!1s0x4741dc1479087f53%3A0x4ffd46a712e22e81!2zQnVkYXBlc3QsIFN6YWJhZHPDoWcgdMOpciwgU3phYmFkc8OhZyB0w6ly!3m2!1d47.503974899999996!2d19.050609599999998!4m5!1s0x4741dc41d2b5e169%3A0xef31e078a69625ad!2zRGXDoWsgRmVyZW5jIHTDqXIsIEJ1ZGFwZXN0!3m2!1d47.4978504!2d19.054444399999998!4m5!1s0x4741dc3fa8b973a3%3A0x69ad7b6fe08a6c76!2sBudapest%2C%20Budapest%20Flats%2C%20Belgr%C3%A1d%20rakpart!3m2!1d47.4975435!2d19.047602299999998!4m5!1s0x4741dc41d2b5e169%3A0xef31e078a69625ad!2zRGXDoWsgRmVyZW5jIHTDqXIsIEJ1ZGFwZXN0!3m2!1d47.4978504!2d19.054444399999998!4m5!1s0x4741dc1a29749877%3A0x21aa9605ac4cec45!2zQnVkYXBlc3QsIEJhdHRoecOhbnkgdMOpciwgQmF0dGh5w6FueSB0w6ly!3m2!1d47.5065343!2d19.0385955!4m5!1s0x4741dc0d0699a215%3A0x227b579cc997b180!2sBudapest%2C%20Nyugati%20p%C3%A1lyaudvar!3m2!1d47.5103368!2d19.0560793!5e1!3m2!1shu!2shu!4v1768930831546!5m2!1shu!2shu" width="1300" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>Készitette: Nyirbátori Ádám, Ruschil Krisztián, Zsigár László</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-title, .kolodkomih-card, .szobor-item, .utvonal').forEach(el => {
+            observer.observe(el);
+        });
+
+        const szoborData = {
+            1: {
+                title: 'Mr Bean',
+                image: 'img/szoborkoz/mrbean.jpg',
+                text: 'Kolodko Mihály, a magyar származású szobrászművész, köztéri miniszobrairól vált híressé, amelyek Budapesten találhatók. Egyik különleges alkotása Mr. Bean mini szobra, amely a népszerű brit komikus sorozatának egyik “szereplőjét” formálja meg. A művész sajátos humorral és részletgazdag kidolgozással örökítette meg Rowan Atkinson ikonikus figurájának plüssállatát. Kolodko szobra jellemzően apró méretű, de annál figyelemfelkeltőbb. Mr. Bean mini szobor esetében is a karaktert rögtön felismerhető módon jeleníti meg. A miniszobor általában nem hivalkodó helyeken bukkan fel, éppen ez adja varázsát; egy rövid séta közben váratlanul kerül a járókelők szeme elé. Kolodko művei sokszor rejtenek magukban kulturális utalásokat vagy humort, ami Mr. Bean karakterével is tökéletesen összhangban van. A szobor felhívja a figyelmet a művészet és a szórakoztatás találkozására, és apró mosolyt csal az emberek arcára a mindennapi rohanásban. '
+            },
+            2: {
+                title: 'Lufikutya',
+                image: 'img/szoborkoz/lufikutya.jpg',
+                text: 'Libidó, avagy Lufikutya csonttal” minikompozíció a Duna-korzón, hát, elég érdekes látvány.  Asszociálhatnánk kutyacsontra, és kutyavégtermékre (kutyakakira) is - Kolodko hagyja, hogy mindenkinek a fantáziája alapján szülessen egy ötlet a műveit látva  viszont ez esetben Kolodko Mihály számára egy igen fontos jelentőséggel bíró alkotás ez: a Lufikutya Jeff Koons kortárs amerikai szobrászra utal, akinek van egy hasonló nevű alkotása, és aki jelenleg a világ egyik legdrágább sztárművésze.  A titok a csontban van, mely ösztönösen vonzza a kutyát, akár egy férfit a nő, ezért is lett „Libidó” a címe.  Helyszín: Lánchíd pesti oldala, az InterContinental Hotel Dunakorzó felöli oldalán.'
+            },
+            3: {
+                title: 'Breki',
+                image: 'img/szoborkoz/breka.jpg',
+                text: 'Aki nyitott szemmel jár a budapesti Szabadság tér parkjában, az a Hütte kávézóval szemben érdekes bronzalakra lehet figyelmes. Breki miniszobra első látásra csak egy egyszerű békafigurának tűnik, ám közelebbről megnézve egyértelművé válik, hogy az 1971 és 1986 között futó Muppet Show sztárjának állít emléket'
+            },
+            4: {
+                title: 'Holdjáró',
+                image: 'img/szoborkoz/holdjaro.jpg',
+                text: 'Kolodko Mihály Holdjáró miniszobra az egyik legérdekesebb és leginkább fantáziadús alkotása, amely ismét a művész kreativitását és játékosságát dicséri. A szobor Budapest egyik eldugott pontján, a városi tér részeként bújik meg, és a művész munkáira jellemző módon apró méretével mégis figyelemfelkeltő hatást gyakorol a szemlélőre. A Holdjáró egy kicsinyített űrhajós figurát ábrázol, amely a Hold felszínén tett első lépéseket idézi meg. A szobor nemcsak a technológiai fejlődés és a történelem előtt tiszteleg, hanem egyfajta utalás az emberi kíváncsiságra és a világűr meghódítására is. Kolodko ezzel a művével finoman reflektál a tudományos áttörésekre, ugyanakkor egy mesei, játékos hangulatot is megőriz, hiszen az apró Holdjáró alakjában felsejlik a gyermeki álmok világa. A szobor elhelyezése szintén a művész humorérzékéről tanúskodik, hiszen Kolodko gyakran választ váratlan vagy rejtett helyszíneket művei számára, mintha csak egy titkot osztana meg a felfedező kedvű járókelőkkel.'
+            },
+            5: {
+                title: 'Usánka',
+                image: 'img/szoborkoz/usanka.jpg',
+                text: 'Egy miniszobrot egy politikus egyszer már a Dunába dobott, erre reflektálhat a művész a magától a vízből visszatérő, békalábú usánka szobrával. Ahogy egy kommentelő megírta, a kis szobrot pontosan az Országház Látogatóközpont mögött találjuk, attól pár méterre, a Duna melletti lépcsőn. „A látogatóközpont mögött van egy zebra, azon átmenve jobbra tarts a Margit híd felé, 1 percen belül meglesz” – olvasható a Facebook-oldalon. '
+            },
+            6: {
+                title: 'Főkukac',
+                image: 'img/szoborkoz/fokukac.jpg',
+                text: 'Kolodko Mihály egyik ironikus és sokértelmű miniszobra, amely finom humorral reflektál a hatalom és a társadalmi hierarchia kérdésére. A kis bronzfigura egy kukacot ábrázol, amely emberi vonásokkal és határozott tartással jelenik meg, mintha egy „főnök” szerepét öltené magára. Már maga az elnevezés is beszédes: a „főkukac” egyszerre nevetséges és elgondolkodtató. A szobor apró mérete ellenére erős üzenetet hordoz. Kolodko művészetére jellemző módon nem mond ki nyílt kritikát, hanem szimbolikusan, játékos formában fogalmaz. A kukac alakja az alantas, jelentéktelen létezés képzetét kelti, míg a „fő” jelző a hatalomra utal – a kettő együtt pedig finom társadalmi szatírát alkot. '
+            },
+            7: {
+                title: 'Rubik Kocka',
+                image: 'img/szoborkoz/rubikkocka.jpg',
+                text: 'Kolodko Mihály egyik ötletes és szimbolikus miniszobra, amely egy világhírű magyar találmány előtt tiszteleg. A kis bronzalkotás nemcsak Rubik Ernő zsenialitását idézi meg, hanem a magyar kreativitás és problémamegoldó gondolkodás jelképe is. A kocka egyszerű formája mögött végtelen variációk és kihívások rejlenek, akárcsak a modern világban felmerülő kérdések mögött. Kolodko stílusára jellemző módon a szobor szerény méretű, szinte észrevétlenül simul bele a városi környezetbe. A járókelő csak akkor fedezi fel, ha figyelmesen néz körül, és ez a felfedezés öröme párhuzamba állítható a Rubik-kocka kirakásának élményével. A mű nem ad azonnali választ, hanem gondolkodásra ösztönöz. '
+            },
+            8: {
+                title: 'Skála Kópé',
+                image: 'img/szoborkoz/skalakope.jpg',
+                text: ' Kolodko Mihály egyik legismertebb és legkedveltebb miniszobra, amely játékos formában idézi meg a múlt egy darabját. A kis bronzfigura a szocializmus idején működő Skála áruházlánc reklámfiguráját eleveníti fel, aki egykor a fogyasztói kultúra derűs, kissé naiv arcát képviselte. A szobor mérete tudatosan kicsi: arra készteti a járókelőt, hogy megálljon, lehajoljon, és közelebbről szemlélje meg. Ez az intimitás személyes kapcsolatot teremt a néző és az alkotás között. A Skála Kópé mosolya egyszerre kedves és ironikus, mintha tudná, hogy egy letűnt kor jelképe, mégis él tovább az emlékezetben. Kolodko Mihály művészetére jellemző módon a szobor nem harsány, nem magyaráz túl semmit. Csendesen van jelen a városi térben, és azokra hat igazán, akik felismerik a mögötte rejlő kulturális utalásokat. A Skála Kópé így válik egyszerre emlékművé, görbe tükörré és játékos városi díszletté egy apró figura, amely egy egész korszak hangulatát sűríti magába. '
+            }
+        };
+
+        document.querySelectorAll('.szobor-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const id = this.dataset.szobor;
+                const data = szoborData[id];
+                const modal = document.getElementById('expandedModal');
+                const content = document.getElementById('expandedContent');
+                
+                const cleanText = data.text.trim().replace(/\s+/g, ' ').replace(/\n\s*/g, ' ');
+                
+                content.innerHTML = `
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <img src="${data.image}" alt="${data.title}" class="img-fluid rounded-4" style="width: 100%; max-height: 600px; object-fit: contain; background: rgba(0, 29, 61, 0.2);">
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="expanded-title">${data.title}</h2>
+                            <p class="expanded-text">${cleanText}</p>
+                        </div>
+                    </div>
+                `;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeExpanded() {
+            document.getElementById('expandedModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('expandedModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExpanded();
+            }
+        });
+    </script>
 </body>
 </html>
